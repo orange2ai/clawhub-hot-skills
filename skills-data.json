@@ -1,0 +1,781 @@
+{
+  "updated_at": "2026-02-14 11:32:59",
+  "timestamp": 1771039979,
+  "skills": [
+    {
+      "name": "yandex-calendar",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/yandex-calendar"
+    }
+,
+    {
+      "name": "xiaomi-air-purifier",
+      "version": "v1.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/xiaomi-air-purifier"
+    }
+,
+    {
+      "name": "xianagent",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/xianagent"
+    }
+,
+    {
+      "name": "x-post-automation",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/x-post-automation"
+    }
+,
+    {
+      "name": "todoist",
+      "version": "v0.2.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/todoist"
+    }
+,
+    {
+      "name": "tg-smart-cta",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/tg-smart-cta"
+    }
+,
+    {
+      "name": "tg-miniapp",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/tg-miniapp"
+    }
+,
+    {
+      "name": "tg",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/tg"
+    }
+,
+    {
+      "name": "telegram-pairing-message-customization",
+      "version": "v1.0.6",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/telegram-pairing-message-customization"
+    }
+,
+    {
+      "name": "telegram-bot",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/telegram-bot"
+    }
+,
+    {
+      "name": "telegram-auto-topic",
+      "version": "v0.1.8",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/telegram-auto-topic"
+    }
+,
+    {
+      "name": "telegram-api",
+      "version": "v1.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/telegram-api"
+    }
+,
+    {
+      "name": "telegram",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/telegram"
+    }
+,
+    {
+      "name": "signal-generator",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/signal-generator"
+    }
+,
+    {
+      "name": "rescuetime",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/rescuetime"
+    }
+,
+    {
+      "name": "prompt-library-curator",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/prompt-library-curator"
+    }
+,
+    {
+      "name": "productivity",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/productivity"
+    }
+,
+    {
+      "name": "prism-alerts",
+      "version": "v1.1.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/prism-alerts"
+    }
+,
+    {
+      "name": "postiz",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/postiz"
+    }
+,
+    {
+      "name": "personal-assistant",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/personal-assistant"
+    }
+,
+    {
+      "name": "ops-framework",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ops-framework"
+    }
+,
+    {
+      "name": "openclaw-social-scheduler",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/openclaw-social-scheduler"
+    }
+,
+    {
+      "name": "openclaw-obsidian-tasks",
+      "version": "v0.1.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/openclaw-obsidian-tasks"
+    }
+,
+    {
+      "name": "openclaw-notion-skill",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/openclaw-notion-skill"
+    }
+,
+    {
+      "name": "openclaw-github-assistant",
+      "version": "v2.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/openclaw-github-assistant"
+    }
+,
+    {
+      "name": "open-ralph",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/open-ralph"
+    }
+,
+    {
+      "name": "obsidian-tasks",
+      "version": "v0.1.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-tasks"
+    }
+,
+    {
+      "name": "obsidian-sync",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-sync"
+    }
+,
+    {
+      "name": "obsidian-plugin-tasknotes",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-plugin-tasknotes"
+    }
+,
+    {
+      "name": "obsidian-plugin-dev",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-plugin-dev"
+    }
+,
+    {
+      "name": "obsidian-official-cli",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-official-cli"
+    }
+,
+    {
+      "name": "obsidian-direct",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-direct"
+    }
+,
+    {
+      "name": "obsidian-daily",
+      "version": "v1.2.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-daily"
+    }
+,
+    {
+      "name": "obsidian-conversation-backup",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian-conversation-backup"
+    }
+,
+    {
+      "name": "obsidian",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/obsidian"
+    }
+,
+    {
+      "name": "notion-sync",
+      "version": "v2.4.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-sync"
+    }
+,
+    {
+      "name": "notion-skill",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-skill"
+    }
+,
+    {
+      "name": "notion-cli-agent",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-cli-agent"
+    }
+,
+    {
+      "name": "notion-cli",
+      "version": "v0.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-cli"
+    }
+,
+    {
+      "name": "notion-api-skill",
+      "version": "v1.0.5",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-api-skill"
+    }
+,
+    {
+      "name": "notion-api-automation",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-api-automation"
+    }
+,
+    {
+      "name": "notion-api",
+      "version": "v1.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-api"
+    }
+,
+    {
+      "name": "notion-2026-01-15",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion-2026-01-15"
+    }
+,
+    {
+      "name": "notion",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/notion"
+    }
+,
+    {
+      "name": "moltbot-ha",
+      "version": "v0.1.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/moltbot-ha"
+    }
+,
+    {
+      "name": "midscene-ios-automation",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/midscene-ios-automation"
+    }
+,
+    {
+      "name": "magic-api",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/magic-api"
+    }
+,
+    {
+      "name": "lunar-calendar",
+      "version": "v0.9.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/lunar-calendar"
+    }
+,
+    {
+      "name": "lark-calendar",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/lark-calendar"
+    }
+,
+    {
+      "name": "intelligence-suite",
+      "version": "v1.0.3",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/intelligence-suite"
+    }
+,
+    {
+      "name": "home-assistant",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/home-assistant"
+    }
+,
+    {
+      "name": "google-calendar",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/google-calendar"
+    }
+,
+    {
+      "name": "gog-calendar",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/gog-calendar"
+    }
+,
+    {
+      "name": "github-topics",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/github-topics"
+    }
+,
+    {
+      "name": "github-repo-stats",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/github-repo-stats"
+    }
+,
+    {
+      "name": "github-repo-stat",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/github-repo-stat"
+    }
+,
+    {
+      "name": "github-repo-sta",
+      "version": "v1.0.3",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/github-repo-sta"
+    }
+,
+    {
+      "name": "github-automation-pro",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/github-automation-pro"
+    }
+,
+    {
+      "name": "giga-coding-agent",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/giga-coding-agent"
+    }
+,
+    {
+      "name": "ghgghg",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ghgghg"
+    }
+,
+    {
+      "name": "ghggh",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ghggh"
+    }
+,
+    {
+      "name": "gh-extract",
+      "version": "v0.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/gh-extract"
+    }
+,
+    {
+      "name": "gh-action-gen",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/gh-action-gen"
+    }
+,
+    {
+      "name": "gcalcli-calendar",
+      "version": "v3.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/gcalcli-calendar"
+    }
+,
+    {
+      "name": "focus-deep-work",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/focus-deep-work"
+    }
+,
+    {
+      "name": "email-to-calendar",
+      "version": "v1.13.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/email-to-calendar"
+    }
+,
+    {
+      "name": "discord-hub-my",
+      "version": "v1.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/discord-hub-my"
+    }
+,
+    {
+      "name": "discord-doctor",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/discord-doctor"
+    }
+,
+    {
+      "name": "discord-admin",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/discord-admin"
+    }
+,
+    {
+      "name": "discord",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/discord"
+    }
+,
+    {
+      "name": "coding",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/coding"
+    }
+,
+    {
+      "name": "codex-sub-agents",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/codex-sub-agents"
+    }
+,
+    {
+      "name": "codex-orchestrator",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/codex-orchestrator"
+    }
+,
+    {
+      "name": "codex-conductor",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/codex-conductor"
+    }
+,
+    {
+      "name": "coder-workspaces",
+      "version": "v1.5.5",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/coder-workspaces"
+    }
+,
+    {
+      "name": "codebuddy-code",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/codebuddy-code"
+    }
+,
+    {
+      "name": "codebuddy-cli",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/codebuddy-cli"
+    }
+,
+    {
+      "name": "clean-code",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/clean-code"
+    }
+,
+    {
+      "name": "calendar-reminders",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/calendar-reminders"
+    }
+,
+    {
+      "name": "brainz-calendar",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/brainz-calendar"
+    }
+,
+    {
+      "name": "automation-workflows-0-1-0",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/automation-workflows-0-1-0"
+    }
+,
+    {
+      "name": "automation-workflows",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/automation-workflows"
+    }
+,
+    {
+      "name": "atl-mobile",
+      "version": "v0.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/atl-mobile"
+    }
+,
+    {
+      "name": "anthrovision-telegram-body-scan",
+      "version": "v1.0.4",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/anthrovision-telegram-body-scan"
+    }
+,
+    {
+      "name": "answeroverflow-1-0-2",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/answeroverflow-1-0-2"
+    }
+,
+    {
+      "name": "answeroverflow",
+      "version": "v1.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/answeroverflow"
+    }
+,
+    {
+      "name": "android-adb",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/android-adb"
+    }
+,
+    {
+      "name": "alicloud-ai-text-document-mind",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/alicloud-ai-text-document-mind"
+    }
+,
+    {
+      "name": "alicloud-ai-content-aimiaobi",
+      "version": "v1.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/alicloud-ai-content-aimiaobi"
+    }
+,
+    {
+      "name": "ai-ppt-generator",
+      "version": "v1.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ai-ppt-generator"
+    }
+,
+    {
+      "name": "ai-ppt-generate",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ai-ppt-generate"
+    }
+,
+    {
+      "name": "ai-notes-ofvideo",
+      "version": "v1.1.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ai-notes-ofvideo"
+    }
+,
+    {
+      "name": "ai-boss-assistant",
+      "version": "v1.0.2",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/ai-boss-assistant"
+    }
+,
+    {
+      "name": "afrexai-email-to-calendar",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/afrexai-email-to-calendar"
+    }
+,
+    {
+      "name": "afrexai-business-automation",
+      "version": "v1.0.0",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/afrexai-business-automation"
+    }
+,
+    {
+      "name": "activecampaign-automation",
+      "version": "v0.1.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/activecampaign-automation"
+    }
+,
+    {
+      "name": "13-day-sprint-method",
+      "version": "v1.0.1",
+      "heat_score": 1,
+      "is_new": true,
+      "url": "https://clawhub.ai/13-day-sprint-method"
+    }
+  ]
+}

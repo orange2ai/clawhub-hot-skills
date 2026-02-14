@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClawHub 热门 Skills 追踪器 🔥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .update-time {
+            text-align: center;
+            padding: 15px;
+            background: #fff3cd;
+            color: #856404;
+            font-size: 0.95em;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .skill-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .skill-card.new {
+            border-left: 5px solid #27ae60;
+            background: linear-gradient(to right, #e8f5e9 0%, white 10%);
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #27ae60;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .skill-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        
+        .skill-version {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+        
+        .skill-heat {
+            display: inline-block;
+            background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .skill-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: color 0.3s;
+        }
+        
+        .skill-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .chart-container {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .chart-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .history-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 ClawHub 热门 Skills 追踪器</h1>
+            <div class="subtitle">实时追踪最热门的 Agent Skills</div>
+        </div>
+        
+        <div class="update-time">
+            ⏰ 最后更新: 2026-02-14 11:32:59 | 🆕 今日新增: 97 个
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">97</div>
+                <div class="stat-label">热门 Skills</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">97</div>
+                <div class="stat-label">今日新增</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1</div>
+                <div class="stat-label">历史记录</div>
+            </div>
+        </div>
+        
+        <div class="skills-grid">
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/yandex-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#1 yandex-calendar</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/yandex-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/xiaomi-air-purifier', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#2 xiaomi-air-purifier</div>
+                    <div class="skill-version">v1.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/xiaomi-air-purifier" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/xianagent', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#3 xianagent</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/xianagent" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/x-post-automation', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#4 x-post-automation</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/x-post-automation" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/todoist', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#5 todoist</div>
+                    <div class="skill-version">v0.2.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/todoist" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/tg-smart-cta', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#6 tg-smart-cta</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/tg-smart-cta" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/tg-miniapp', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#7 tg-miniapp</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/tg-miniapp" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/tg', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#8 tg</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/tg" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/telegram-pairing-message-customization', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#9 telegram-pairing-message-customization</div>
+                    <div class="skill-version">v1.0.6</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/telegram-pairing-message-customization" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/telegram-bot', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#10 telegram-bot</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/telegram-bot" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/telegram-auto-topic', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#11 telegram-auto-topic</div>
+                    <div class="skill-version">v0.1.8</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/telegram-auto-topic" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/telegram-api', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#12 telegram-api</div>
+                    <div class="skill-version">v1.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/telegram-api" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/telegram', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#13 telegram</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/telegram" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/signal-generator', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#14 signal-generator</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/signal-generator" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/rescuetime', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#15 rescuetime</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/rescuetime" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/prompt-library-curator', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#16 prompt-library-curator</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/prompt-library-curator" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/productivity', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#17 productivity</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/productivity" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/prism-alerts', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#18 prism-alerts</div>
+                    <div class="skill-version">v1.1.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/prism-alerts" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/postiz', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#19 postiz</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/postiz" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/personal-assistant', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#20 personal-assistant</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/personal-assistant" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ops-framework', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#21 ops-framework</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ops-framework" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/openclaw-social-scheduler', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#22 openclaw-social-scheduler</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/openclaw-social-scheduler" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/openclaw-obsidian-tasks', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#23 openclaw-obsidian-tasks</div>
+                    <div class="skill-version">v0.1.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/openclaw-obsidian-tasks" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/openclaw-notion-skill', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#24 openclaw-notion-skill</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/openclaw-notion-skill" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/openclaw-github-assistant', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#25 openclaw-github-assistant</div>
+                    <div class="skill-version">v2.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/openclaw-github-assistant" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/open-ralph', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#26 open-ralph</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/open-ralph" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-tasks', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#27 obsidian-tasks</div>
+                    <div class="skill-version">v0.1.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-tasks" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-sync', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#28 obsidian-sync</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-sync" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-plugin-tasknotes', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#29 obsidian-plugin-tasknotes</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-plugin-tasknotes" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-plugin-dev', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#30 obsidian-plugin-dev</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-plugin-dev" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-official-cli', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#31 obsidian-official-cli</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-official-cli" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-direct', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#32 obsidian-direct</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-direct" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-daily', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#33 obsidian-daily</div>
+                    <div class="skill-version">v1.2.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-daily" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian-conversation-backup', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#34 obsidian-conversation-backup</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian-conversation-backup" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/obsidian', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#35 obsidian</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/obsidian" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-sync', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#36 notion-sync</div>
+                    <div class="skill-version">v2.4.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-sync" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-skill', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#37 notion-skill</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-skill" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-cli-agent', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#38 notion-cli-agent</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-cli-agent" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-cli', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#39 notion-cli</div>
+                    <div class="skill-version">v0.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-cli" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-api-skill', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#40 notion-api-skill</div>
+                    <div class="skill-version">v1.0.5</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-api-skill" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-api-automation', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#41 notion-api-automation</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-api-automation" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-api', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#42 notion-api</div>
+                    <div class="skill-version">v1.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-api" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion-2026-01-15', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#43 notion-2026-01-15</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion-2026-01-15" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/notion', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#44 notion</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/notion" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/moltbot-ha', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#45 moltbot-ha</div>
+                    <div class="skill-version">v0.1.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/moltbot-ha" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/midscene-ios-automation', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#46 midscene-ios-automation</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/midscene-ios-automation" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/magic-api', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#47 magic-api</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/magic-api" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/lunar-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#48 lunar-calendar</div>
+                    <div class="skill-version">v0.9.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/lunar-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/lark-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#49 lark-calendar</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/lark-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/intelligence-suite', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#50 intelligence-suite</div>
+                    <div class="skill-version">v1.0.3</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/intelligence-suite" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/home-assistant', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#51 home-assistant</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/home-assistant" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/google-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#52 google-calendar</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/google-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/gog-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#53 gog-calendar</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/gog-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/github-topics', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#54 github-topics</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/github-topics" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/github-repo-stats', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#55 github-repo-stats</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/github-repo-stats" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/github-repo-stat', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#56 github-repo-stat</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/github-repo-stat" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/github-repo-sta', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#57 github-repo-sta</div>
+                    <div class="skill-version">v1.0.3</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/github-repo-sta" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/github-automation-pro', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#58 github-automation-pro</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/github-automation-pro" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/giga-coding-agent', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#59 giga-coding-agent</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/giga-coding-agent" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ghgghg', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#60 ghgghg</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ghgghg" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ghggh', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#61 ghggh</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ghggh" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/gh-extract', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#62 gh-extract</div>
+                    <div class="skill-version">v0.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/gh-extract" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/gh-action-gen', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#63 gh-action-gen</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/gh-action-gen" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/gcalcli-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#64 gcalcli-calendar</div>
+                    <div class="skill-version">v3.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/gcalcli-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/focus-deep-work', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#65 focus-deep-work</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/focus-deep-work" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/email-to-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#66 email-to-calendar</div>
+                    <div class="skill-version">v1.13.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/email-to-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/discord-hub-my', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#67 discord-hub-my</div>
+                    <div class="skill-version">v1.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/discord-hub-my" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/discord-doctor', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#68 discord-doctor</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/discord-doctor" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/discord-admin', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#69 discord-admin</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/discord-admin" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/discord', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#70 discord</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/discord" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/coding', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#71 coding</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/coding" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/codex-sub-agents', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#72 codex-sub-agents</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/codex-sub-agents" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/codex-orchestrator', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#73 codex-orchestrator</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/codex-orchestrator" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/codex-conductor', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#74 codex-conductor</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/codex-conductor" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/coder-workspaces', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#75 coder-workspaces</div>
+                    <div class="skill-version">v1.5.5</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/coder-workspaces" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/codebuddy-code', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#76 codebuddy-code</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/codebuddy-code" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/codebuddy-cli', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#77 codebuddy-cli</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/codebuddy-cli" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/clean-code', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#78 clean-code</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/clean-code" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/calendar-reminders', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#79 calendar-reminders</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/calendar-reminders" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/brainz-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#80 brainz-calendar</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/brainz-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/automation-workflows-0-1-0', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#81 automation-workflows-0-1-0</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/automation-workflows-0-1-0" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/automation-workflows', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#82 automation-workflows</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/automation-workflows" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/atl-mobile', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#83 atl-mobile</div>
+                    <div class="skill-version">v0.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/atl-mobile" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/anthrovision-telegram-body-scan', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#84 anthrovision-telegram-body-scan</div>
+                    <div class="skill-version">v1.0.4</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/anthrovision-telegram-body-scan" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/answeroverflow-1-0-2', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#85 answeroverflow-1-0-2</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/answeroverflow-1-0-2" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/answeroverflow', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#86 answeroverflow</div>
+                    <div class="skill-version">v1.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/answeroverflow" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/android-adb', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#87 android-adb</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/android-adb" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/alicloud-ai-text-document-mind', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#88 alicloud-ai-text-document-mind</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/alicloud-ai-text-document-mind" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/alicloud-ai-content-aimiaobi', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#89 alicloud-ai-content-aimiaobi</div>
+                    <div class="skill-version">v1.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/alicloud-ai-content-aimiaobi" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ai-ppt-generator', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#90 ai-ppt-generator</div>
+                    <div class="skill-version">v1.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ai-ppt-generator" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ai-ppt-generate', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#91 ai-ppt-generate</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ai-ppt-generate" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ai-notes-ofvideo', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#92 ai-notes-ofvideo</div>
+                    <div class="skill-version">v1.1.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ai-notes-ofvideo" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/ai-boss-assistant', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#93 ai-boss-assistant</div>
+                    <div class="skill-version">v1.0.2</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/ai-boss-assistant" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/afrexai-email-to-calendar', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#94 afrexai-email-to-calendar</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/afrexai-email-to-calendar" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/afrexai-business-automation', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#95 afrexai-business-automation</div>
+                    <div class="skill-version">v1.0.0</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/afrexai-business-automation" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/activecampaign-automation', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#96 activecampaign-automation</div>
+                    <div class="skill-version">v0.1.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/activecampaign-automation" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+                <div class="skill-card new" onclick="window.open('https://clawhub.ai/13-day-sprint-method', '_blank')">
+                    <div class="new-badge">🆕 NEW</div>
+                    <div class="skill-name">#97 13-day-sprint-method</div>
+                    <div class="skill-version">v1.0.1</div>
+                    <div class="skill-heat">🔥 热度: 1</div>
+                    <a href="https://clawhub.ai/13-day-sprint-method" class="skill-link" target="_blank" onclick="event.stopPropagation()">
+                        查看详情 →
+                    </a>
+                </div>
+            
+        </div>
+        
+        
+        <div class="chart-container">
+            <div class="chart-title">📈 历史趋势</div>
+            <div class="history-chart">
+                
+                    <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                        <strong>2026-02-14 11:32:59</strong> - 追踪了 97 个 skills
+                    </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <button class="refresh-btn" onclick="location.reload()">🔄 刷新数据</button>
+    
+    <script>
+        // 自动刷新（每5分钟）
+        setTimeout(() => location.reload(), 5 * 60 * 1000);
+        
+        console.log('ClawHub Skills Tracker loaded!');
+        console.log('Total skills:', 97);
+        console.log('New skills:', 97);
+    </script>
+</body>
+</html>
