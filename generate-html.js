@@ -11,11 +11,24 @@ const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
 // 读取历史记录
 let history = [];
 if (fs.existsSync(HISTORY_FILE)) {
-    history = fs.readFileSync(HISTORY_FILE, 'utf8')
-        .split('\n')
-        .filter(line => line.trim())
-        .map(line => JSON.parse(line))
-        .slice(-30); // 保留最近30条
+    try {
+        history = fs.readFileSync(HISTORY_FILE, 'utf8')
+            .split('\n')
+            .filter(line => line.trim())
+            .map(line => {
+                try {
+                    return JSON.parse(line);
+                } catch (e) {
+                    console.warn('跳过无效的历史记录行:', line);
+                    return null;
+                }
+            })
+            .filter(item => item !== null)
+            .slice(-30); // 保留最近30条
+    } catch (e) {
+        console.warn('读取历史记录失败:', e.message);
+        history = [];
+    }
 }
 
 // 统计新增数量
