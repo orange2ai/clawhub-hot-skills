@@ -1,8 +1,9 @@
 #!/bin/bash
 # ClawHub 热门 Skills 抓取脚本
 
-WORKSPACE="/Users/marsoran/.openclaw/workspace"
-DATA_DIR="$WORKSPACE/clawhub-tracker"
+# 获取脚本所在目录
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DATA_DIR="$SCRIPT_DIR"
 HTML_FILE="$DATA_DIR/index.html"
 DATA_FILE="$DATA_DIR/skills-data.json"
 HISTORY_FILE="$DATA_DIR/history.jsonl"
@@ -108,6 +109,6 @@ echo "📝 历史记录: $HISTORY_FILE"
 
 # 生成 HTML
 echo "🎨 生成 HTML 页面..."
-node "$WORKSPACE/clawhub-tracker/generate-html.js"
+cd "$SCRIPT_DIR" && node generate-html.js
 
 echo "🎉 完成！访问: file://$HTML_FILE"
